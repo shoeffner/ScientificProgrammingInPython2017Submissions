@@ -22,13 +22,12 @@ def mean_routes(airlines, airports, routes):
     used two
     '''
     # Select needed valid data.
-    route_data = routes[['src_airport', 'dest_airport']]
+    route_data = routes[['src_airport']]
     airport_data = airports[['country', 'iata']][airports['iata'] != "\\N"]
 
     # Join data
-    joined_data = pd.merge_ordered(airport_data, route_data, how='left',
-                                   left_on='iata', left_by='country',
-                                   right_on='src_airport')
+    joined_data = pd.merge_ordered(airport_data, route_data, how='inner',
+                                   left_on='iata', right_on='src_airport')
     # Reduce data
     joined_data = joined_data[['country', 'iata']]
 
