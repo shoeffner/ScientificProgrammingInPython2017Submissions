@@ -132,6 +132,7 @@ def __plot(start=0):
         stimline = ax.axvline(0, color='k')
 
         # Beautify plot with labels, legend, etc.
+        ax.set_xlim([-0.2, 0.6])
         ax.set_title('Stimulus {}'.format(indices[idx - 1]))
         ax.set_xlabel('time offset [seconds]')
         ax.set_ylabel('EOG')
