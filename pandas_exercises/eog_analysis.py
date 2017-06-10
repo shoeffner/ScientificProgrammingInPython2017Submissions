@@ -94,23 +94,27 @@ def plot(data, stimuli):
     figure.suptitle('EOG data (use arrows to navigate through samples)')
     figure.data = data
     figure.stimuli = stimuli
-    figure.start = 0
+    figure.start = -4
     figure.canvas.mpl_connect('key_press_event', keypress)
-    __plot()
+    __plot(series=[8, 22, 24, 34])
 
 
-def __plot(start=0):
+def __plot(start=0, series=None):
     """Plots four windows starting at start in the figure prepared by plot.
 
     Args:
         start: The starting index.
     """
     figure = plt.figure('EOG data')
-    if start < 0:
-        start = len(figure.stimuli) + start
-    figure.start = start % len(figure.stimuli)
+    if series:
+        indices = series
+    else:
+        if start < 0:
+            start = len(figure.stimuli) + start
+        figure.start = start % len(figure.stimuli)
 
-    indices = list(range(figure.start, figure.start + 4))
+        indices = list(range(figure.start, figure.start + 4))
+
     for idx, stimulus in enumerate(figure.stimuli.timestamp[indices], 1):
         # Get window and jumps
         window = get_window(stimulus, figure.data)
